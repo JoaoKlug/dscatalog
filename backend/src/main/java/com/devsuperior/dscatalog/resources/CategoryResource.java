@@ -4,10 +4,12 @@ import com.devsuperior.dscatalog.dto.CategoryDTO;
 import com.devsuperior.dscatalog.services.CategoryService;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,9 +28,9 @@ public class CategoryResource {
     private CategoryService service;
 
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>>findAll() {
-        List<CategoryDTO> list = service.findAll();
-
+    public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable) {
+        // Spring will now create the Pageable object from URL parameters
+        Page<CategoryDTO> list = service.findAllPaged(pageable);
         return ResponseEntity.ok().body(list);
     }
 
@@ -50,11 +52,17 @@ public class CategoryResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryDTO> putMethodName(@PathVariable Long id, @RequestBody CategoryDTO dto ) {
+    public ResponseEntity<CategoryDTO> updateById(@PathVariable Long id, @RequestBody CategoryDTO dto ) {
         
         dto = service.update(id, dto);
-    
         return ResponseEntity.ok().body(dto);
+        
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 

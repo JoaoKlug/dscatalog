@@ -1,0 +1,12 @@
+Qual a função do DTO ? Se ele tem os mesmo atributos do entity, ele é o mesmo?
+A anotação @Entitiy e @Table tem grande parte nesse diferencial ?
+
+Como o SpringBoot faz as coisas funcionarem através das anotações ?
+Porque a divisão é feita em Service, Controller e Repository ?
+
+Como o JPA funciona ?
+
+A classe ResponseEntity funciona como ? 
+Como ela conversa junto as anotações PathVariable e RequestBody ?
+
+O que são funções lambda ? Como elas podem ser utilizadas ?
