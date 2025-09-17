@@ -1,7 +1,7 @@
 package com.devsuperior.dscatalog.resources;
 
-import com.devsuperior.dscatalog.dto.CategoryDTO;
-import com.devsuperior.dscatalog.services.CategoryService;
+import com.devsuperior.dscatalog.dto.ProductDTO;
+import com.devsuperior.dscatalog.services.ProductService;
 
 import java.net.URI;
 
@@ -21,27 +21,26 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@RequestMapping(value = "/categories")
-public class CategoryResource {
+@RequestMapping(value = "/products")
+public class ProductResource {
 
     @Autowired
-    private CategoryService service;
+    private ProductService service;
 
     @GetMapping
-    public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable) {
-        Page<CategoryDTO> list = service.findAllPaged(pageable);
+    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
+        Page<ProductDTO> list = service.findAllPaged(pageable);
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CategoryDTO>findById(@PathVariable Long id) {
-        CategoryDTO category = service.findById(id);
-
-        return ResponseEntity.ok().body(category);
+    public ResponseEntity<ProductDTO>findById(@PathVariable Long id) {
+        ProductDTO Product = service.findById(id);
+        return ResponseEntity.ok().body(Product);
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryDTO dto) {
+    public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) {
         dto = service.insert(dto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -51,7 +50,7 @@ public class CategoryResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryDTO> updateById(@PathVariable Long id, @RequestBody CategoryDTO dto ) {
+    public ResponseEntity<ProductDTO> updateById(@PathVariable Long id, @RequestBody ProductDTO dto ) {
         
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
@@ -66,3 +65,4 @@ public class CategoryResource {
 
 
 }
+

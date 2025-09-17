@@ -7,6 +7,8 @@ Porque a divisão é feita em Service, Controller e Repository ?
 Como o JPA funciona ?
 
 A classe ResponseEntity funciona como ? 
-Como ela conversa junto as anotações PathVariable e RequestBody ?
+Como ela conversa junto as anotações @PathVariable e @RequestBody ?
 
 O que são funções lambda ? Como elas podem ser utilizadas ?
+
+Porque utilizar a anotação @Transactional ?
