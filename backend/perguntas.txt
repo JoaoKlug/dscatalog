@@ -12,3 +12,9 @@ Como ela conversa junto as anotações @PathVariable e @RequestBody ?
 O que são funções lambda ? Como elas podem ser utilizadas ?
 
 Porque utilizar a anotação @Transactional ?
+
+Porque utilizar getOne() do JPA ?
+
+No copyDtoToEntity do ProductService, ao instanciar uma nova Categoria posso estar criando uma replica dessa categoria na memória, de modo que
+ao alterar a categoria posteriormente a replica ficaria desatualizada na referencia do produto ? Como isso é resolvido ? A solucao está relacionada
+com o getReferenceById ?

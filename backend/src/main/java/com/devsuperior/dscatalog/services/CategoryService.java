@@ -41,11 +41,11 @@ public class CategoryService {
     @Transactional
     public CategoryDTO insert(CategoryDTO dto) {
         
-        Category enitity = new Category();
-        enitity.setName(dto.getName());
-        enitity = repository.save(enitity);
+        Category entity = new Category();
+        entity.setName(dto.getName());
+        entity = repository.save(entity);
 
-        return new CategoryDTO(enitity);
+        return new CategoryDTO(entity);
     }
 
 

@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.devsuperior.dscatalog.dto.CategoryDTO;
 import com.devsuperior.dscatalog.dto.ProductDTO;
+import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
 import com.devsuperior.dscatalog.exceptions.DatabaseException;
 import com.devsuperior.dscatalog.exceptions.ResourceNotFoundException;
+import com.devsuperior.dscatalog.repository.CategoryRepository;
 import com.devsuperior.dscatalog.repository.ProductRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +24,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository repository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(Pageable pageable) {
@@ -40,11 +46,11 @@ public class ProductService {
     @Transactional
     public ProductDTO insert(ProductDTO dto) {
         
-        Product enitity = new Product();
-        enitity.setName(dto.getName());
-        enitity = repository.save(enitity);
+        Product entity = new Product();
+        copyDtoToEntity(dto, entity);
+        entity = repository.save(entity);
 
-        return new ProductDTO(enitity);
+        return new ProductDTO(entity);
     }
 
 
@@ -53,7 +59,7 @@ public class ProductService {
         
         try {
             Product entity = repository.getReferenceById(id);
-            entity.setName(dto.getName());
+            copyDtoToEntity(dto, entity);
             entity = repository.save(entity);
             return new ProductDTO(entity);
         } catch (EntityNotFoundException e) {
@@ -76,4 +82,18 @@ public class ProductService {
         }
     }
 
+    private void copyDtoToEntity(ProductDTO dto, Product ent){
+
+        ent.setName(dto.getName());
+        ent.setDescription(dto.getDescription());
+        ent.setImgUrl(dto.getImgUrl());
+        ent.setDate(dto.getDate());
+        ent.setPrice(dto.getPrice());
+
+        ent.getCategories().clear();
+        for(CategoryDTO catDTO : dto.getCategories()){
+            Category cat = categoryRepository.getReferenceById(catDTO.getId());
+            ent.getCategories().add(cat);
+        }
+    }
 }
